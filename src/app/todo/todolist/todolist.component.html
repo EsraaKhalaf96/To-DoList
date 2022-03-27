@@ -1,0 +1,105 @@
+
+  <section class="todo-list">
+    <div class="container">
+        <div class="date">
+            <div class="date-number">
+                <span class="day">12</span>
+                 <div class="month-year">
+                     <span class="month">JAN</span><span>2016</span>
+                  </div>
+              </div>
+            <div>TUESDAY</div>
+        </div>
+        <div>
+          <input #inputSearch [(ngModel)]="searchItem"  class="input-search" type="search"  name="q" placeholder="Search in Tasks...">
+        </div>
+        <ul class="todo-list-items" >
+          <li class="active" *ngFor="let item of todolist | filter: searchItem">
+              <div class="actions">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <div class="task-title active"> {{item.title}}</div>
+              </div>
+              <div>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                 <i class="fa fa-trash-o" (click)="DeleteTask(item.id)" aria-hidden="true"></i>
+             </div>
+
+           </li>
+            <!-- <li class="completed">
+              <div class="actions">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <div class="task-title"> go to shopping</div>
+               </div>
+
+              <div>
+                   <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </div>
+            </li>
+            <li class="completed">
+              <div class="actions">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <div class="task-title"> call my friend</div>
+               </div>
+
+              <div>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                 <i class="fa fa-trash-o" aria-hidden="true"></i>
+             </div>
+           </li>
+            <li class="active">
+              <div class="actions">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <div class="task-title active"> Reading Some Books </div>
+              </div>
+
+              <div>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                 <i class="fa fa-trash-o" aria-hidden="true"></i>
+             </div>
+
+           </li>
+           <li class="active">
+              <div class="actions">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <div class="task-title"> Cooking Food</div>
+              </div>
+
+              <div>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                 <i class="fa fa-trash-o" aria-hidden="true"></i>
+             </div>
+
+           </li> -->
+        </ul>
+        <button class="add-task" (click)="open()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+    </div>
+  </section>
+
+
+  <div class="modal fade addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" #myModal>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Add Task</h5>
+          <button type="button" class="close" (click)="close()" aria-label="Close"><span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <input type="text"/>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button  type="button" class="save-task">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
