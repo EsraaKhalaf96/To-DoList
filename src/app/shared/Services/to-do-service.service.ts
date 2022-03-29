@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map,filter } from 'rxjs/operators';
+// import {ToDo} from '../../Models/TodoInterface'
 @Injectable({
   providedIn: 'root'
 })
@@ -12,18 +13,9 @@ export class ToDoServiceService {
   constructor(private http: HttpClient) { }
   getAllToDos():Observable<any>{
     console.log( this.server_url)
-    return this.http.get(this.server_url + '/todos' )
+    return this.http.get(this.server_url + '/todos/'+'?_limit=10')
   }
-  // deleteNotes(id: any){
-  //   return this.http.delete(this.server_url + `/notes/${id}`);
-  // }
-  // addNotes(data: any){
-  //   return this.http.post(this.server_url + '/notes',data)
-  // }
-  // getItemDetailsById(id: any){
-  //   return this.http.get(this.server_url + `/notes/${id}`)
-  // }
-  // editNotes(data: any,id: any){
-  //   return this.http.put(this.server_url + `/notes/${id}`,data)
-  // }
+  updateToDoList(id:number,data):Observable<any>{
+    return this.http.put(`${ this.server_url}/${id}`,data)
+  }
 }

@@ -8,77 +8,32 @@
                      <span class="month">JAN</span><span>2016</span>
                   </div>
               </div>
-            <div>TUESDAY</div>
+            <div translate>TUESDAY</div>
         </div>
         <div>
-          <input #inputSearch [(ngModel)]="searchItem"  class="input-search" type="search"  name="q" placeholder="Search in Tasks...">
+          <input #inputSearch [(ngModel)]="searchItem" autocomplete="off"  class="input-search" type="search"  name="q" placeholder="Search in Tasks...">
         </div>
         <ul class="todo-list-items" >
-          <li class="active" *ngFor="let item of todolist | filter: searchItem">
-              <div class="actions">
-                  <i class="fa fa-check-circle" aria-hidden="true"></i>
-                  <i class="fa fa-circle-o"></i>
-                  <div class="task-title active"> {{item.title}}</div>
-              </div>
+          <li (click)="addCompletedTask()" [ngClass]="item.completed == true ? 'completed' : 'active'" *ngFor="let item of todolist | filter: searchItem">
+                  <div class="task-title">
+                     <span>{{item.title}}</span>
+                    </div>
               <div>
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                 <i class="fa fa-trash-o" (click)="DeleteTask(item.id)" aria-hidden="true"></i>
+                  <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                  <div class="actions">
+                  <i  class="lar la-circle"></i>
+                  <i class="las la-pen" (click)="updateTask(item.id)"></i>
+                 <!-- <i class="fa fa-trash-o" (click)="DeleteTask(item.id)" aria-hidden="true"></i> -->
+                 <i class="lar la-trash-alt" (click)="DeleteTask(item.id)" aria-hidden="true"></i>
+                </div>
+
              </div>
 
            </li>
-            <!-- <li class="completed">
-              <div class="actions">
-                  <i class="fa fa-check-circle" aria-hidden="true"></i>
-                  <i class="fa fa-circle-o"></i>
-                  <div class="task-title"> go to shopping</div>
-               </div>
 
-              <div>
-                   <i class="fa fa-pencil" aria-hidden="true"></i>
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-              </div>
-            </li>
-            <li class="completed">
-              <div class="actions">
-                  <i class="fa fa-check-circle" aria-hidden="true"></i>
-                  <i class="fa fa-circle-o"></i>
-                  <div class="task-title"> call my friend</div>
-               </div>
-
-              <div>
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                 <i class="fa fa-trash-o" aria-hidden="true"></i>
-             </div>
-           </li>
-            <li class="active">
-              <div class="actions">
-                  <i class="fa fa-check-circle" aria-hidden="true"></i>
-                  <i class="fa fa-circle-o"></i>
-                  <div class="task-title active"> Reading Some Books </div>
-              </div>
-
-              <div>
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                 <i class="fa fa-trash-o" aria-hidden="true"></i>
-             </div>
-
-           </li>
-           <li class="active">
-              <div class="actions">
-                  <i class="fa fa-check-circle" aria-hidden="true"></i>
-                  <i class="fa fa-circle-o"></i>
-                  <div class="task-title"> Cooking Food</div>
-              </div>
-
-              <div>
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                 <i class="fa fa-trash-o" aria-hidden="true"></i>
-             </div>
-
-           </li> -->
         </ul>
-        <button class="add-task" (click)="open()">
-          <i class="fa fa-plus" aria-hidden="true"></i>
+        <button  class="add-task" (click)="open()">
+          <i class="las la-plus"></i>
         </button>
     </div>
   </section>
@@ -86,20 +41,33 @@
 
   <div class="modal fade addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" #myModal>
     <div class="modal-dialog" role="document">
+      <form [formGroup]="addTaskForm"  (ngSubmit)="onSubmit()">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" >Add Task</h5>
-          <button type="button" class="close" (click)="close()" aria-label="Close"><span aria-hidden="true">&times;</span>
+          <h5 class="modal-title"  translate>Add Task</h5>
+          <button type="button" class="close" (click)="closeModal()" aria-label="Close"><span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form>
-            <input type="text"/>
-          </form>
+          <div class="form-group">
+            <label translate>Enter Your Task</label>
+            <input type="text" formControlName="addTask" />
+          </div>
+        <div class="txt-valid" *ngIf="
+            addTaskForm.get('addTask')?.invalid &&
+            (addTaskForm.get('addTask')?.dirty ||
+            addTaskForm.get('addTask')?.touched)
+          ">
+          <small translate class="form-text text-danger" *ngIf="addTaskForm.get('addTask')?.errors?.required">
+            Please Enter Your Task
+          </small>
+        </div>
+
         </div>
         <div class="modal-footer">
-          <button  type="button" class="save-task">Save</button>
+          <button  type="submit" class="save-task" [disabled]="addTaskForm.invalid" translate>Add Task</button>
         </div>
       </div>
+    </form>
     </div>
   </div>

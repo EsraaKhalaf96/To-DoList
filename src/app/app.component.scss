@@ -1,0 +1,27 @@
+.change-lng{
+  margin-left: 210px;
+  font-weight: bold;
+  cursor: pointer;
+  .ar{
+    border: 0;
+    position: relative;
+    color: #03B0AC;
+    font-weight: bold;
+    /* font-family: "Cairo", sans-serif; */
+    cursor: pointer;
+    &:after {
+      content: "";
+      background: #004E75;
+      width: 2px;
+      height: 20px;
+      position: absolute;
+      right: 0px;
+  }
+  }
+  .en{
+    border: 0;
+    font-weight: bold;
+    cursor: pointer;
+    color: #004E75;
+  }
+}

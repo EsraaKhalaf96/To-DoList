@@ -1,3 +1,4 @@
+@import 'src/assets/scss/main-en.scss';
 .page-header{
   display: flex;
   align-items: center;
@@ -92,9 +93,8 @@
       border-width: 0px 0 67px 36px;
       border-color: transparent transparent #F9F9F9 transparent;
     }
-
-    .fa.fa-twitter{
-      display: inline-block;
+    .la-twitter{
+    display: inline-block;
     background-color: #004E75;
     color: #FFFFFF;
     padding: 10px;
