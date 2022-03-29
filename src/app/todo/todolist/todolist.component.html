@@ -1,4 +1,3 @@
-
   <section class="todo-list">
     <div class="container">
         <div class="date">
@@ -14,60 +13,55 @@
           <input #inputSearch [(ngModel)]="searchItem" autocomplete="off"  class="input-search" type="search"  name="q" placeholder="Search in Tasks...">
         </div>
         <ul class="todo-list-items" >
-          <li (click)="addCompletedTask()" [ngClass]="item.completed == true ? 'completed' : 'active'" *ngFor="let item of todolist | filter: searchItem">
+          <li  [ngClass]="item.completed == true ? 'completed' : 'active'" *ngFor="let item of todolist | filter: searchItem">
                   <div class="task-title">
                      <span>{{item.title}}</span>
                     </div>
               <div>
-                  <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
                   <div class="actions">
-                  <i  class="lar la-circle"></i>
-                  <i class="las la-pen" (click)="updateTask(item.id)"></i>
-                 <!-- <i class="fa fa-trash-o" (click)="DeleteTask(item.id)" aria-hidden="true"></i> -->
+                  <i  class="lar la-circle" (click)="addCompletedTask(item)" [ngClass]="item.completed == true ? 'completed' : 'active'" ></i>
+                  <i class="las la-pen" (click)="addEditTask(item)"></i>
                  <i class="lar la-trash-alt" (click)="DeleteTask(item.id)" aria-hidden="true"></i>
                 </div>
-
              </div>
-
            </li>
-
         </ul>
-        <button  class="add-task" (click)="open()">
+        <button  class="add-task" (click)="addEditTask(null)">
           <i class="las la-plus"></i>
         </button>
     </div>
   </section>
 
-
+<!-- add edit modal -->
   <div class="modal fade addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" #myModal>
     <div class="modal-dialog" role="document">
-      <form [formGroup]="addTaskForm"  (ngSubmit)="onSubmit()">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"  translate>Add Task</h5>
-          <button type="button" class="close" (click)="closeModal()" aria-label="Close"><span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label translate>Enter Your Task</label>
-            <input type="text" formControlName="addTask" />
+        <form [formGroup]="addTaskForm"  (ngSubmit)="onSubmit()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"  translate *ngIf="this.isAddMode">Add Task</h5>
+            <h5 class="modal-title"  translate *ngIf="this.isEditMode">Edit Task</h5>
+            <button type="button" class="close" (click)="closeModal()" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
           </div>
-        <div class="txt-valid" *ngIf="
-            addTaskForm.get('addTask')?.invalid &&
-            (addTaskForm.get('addTask')?.dirty ||
-            addTaskForm.get('addTask')?.touched)
-          ">
-          <small translate class="form-text text-danger" *ngIf="addTaskForm.get('addTask')?.errors?.required">
-            Please Enter Your Task
-          </small>
+          <div class="modal-body">
+            <div class="form-group">
+              <label translate>Enter Your Task</label>
+              <input type="text" formControlName="title" />
+            </div>
+          <div class="txt-valid" *ngIf="
+              addTaskForm.get('addTask')?.invalid &&
+              (addTaskForm.get('addTask')?.dirty ||
+              addTaskForm.get('addTask')?.touched)
+            ">
+            <small translate class="form-text text-danger" *ngIf="addTaskForm.get('addTask')?.errors?.required">
+              Please Enter Your Task
+            </small>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button  type="submit" class="save-task" [disabled]="addTaskForm.invalid" translate>Save</button>
+          </div>
         </div>
-
-        </div>
-        <div class="modal-footer">
-          <button  type="submit" class="save-task" [disabled]="addTaskForm.invalid" translate>Add Task</button>
-        </div>
-      </div>
-    </form>
+      </form>
     </div>
   </div>
